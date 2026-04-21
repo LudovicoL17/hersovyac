@@ -135,7 +135,7 @@ h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-h
 .hero-pose-img{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   object-position:center;
   transform-origin:center center;
   will-change:transform,filter,opacity;
@@ -219,7 +219,7 @@ h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-h
 .p-img{width:100%;aspect-ratio:600/506;object-fit:cover}
 .p-body{padding:18px 22px 22px}
 .p-title{font-family:var(--fd);font-size:1.02rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3}
-.p-price{font-family:var(--fd);font-size:1.45rem;font-weight:700;color:var(--gold-lt);margin-bottom:14px}
+.p-price{font-family:var(--fb);font-size:1.35rem;font-weight:600;letter-spacing:.02em;color:var(--gold-lt);margin-bottom:14px}
 
 /* COACHING */
 .coaching{padding:120px 0;background:var(--bg)}
@@ -231,7 +231,7 @@ h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-h
 .s-body{padding:20px 22px 26px;flex:1;display:flex;flex-direction:column}
 .s-title{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.3}
 .s-desc{font-size:.81rem;color:var(--t3);line-height:1.65;margin-bottom:14px;flex:1;font-weight:300}
-.s-price{font-family:var(--fd);font-size:1.55rem;font-weight:700;color:var(--gold-lt);margin-bottom:14px}
+.s-price{font-family:var(--fb);font-size:1.45rem;font-weight:600;letter-spacing:.02em;color:var(--gold-lt);margin-bottom:14px}
 
 /* BOOKING */
 .booking{padding:120px 0;background:var(--s1);position:relative;overflow:hidden}
@@ -387,13 +387,13 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap" data-a>
-        <img src="https://hersovyac.com/wp-content/uploads/2022/09/PHOTO-2022-09-14-08-59-52.jpg" alt="Hersovyac — Certified Online Personal Trainer" loading="lazy">
+        <img src="https://hersovyac.com/wp-content/uploads/2025/06/dark1.png" alt="Hersovyac — Certified Online Personal Trainer" loading="lazy" style="object-position:center top">
       </div>
       <div class="about-text">
         <span class="lbl" data-a>About</span>
         <h2 data-a data-d="1">Shape Your Body.<br>Forge Your Mindset.</h2>
-        <p data-a data-d="2">I'm a certified online personal trainer, nutritionist and posing coach. My mission is simple — help you shape and define your body while building a stronger, unshakeable mindset. Whether you're starting from scratch or pushing past a plateau, I build programs that work for your life.</p>
-        <p data-a data-d="3">Every plan is built from the ground up. No templates, no guesswork — only protocols designed around your goals, your schedule and your body.</p>
+        <p data-a data-d="2">I'm a certified online personal trainer, nutritionist and posing coach. My mission is simple: help you shape and define your body while building a stronger, unshakeable mindset. Whether you're starting from scratch or pushing past a plateau, I build programs that work for your life.</p>
+        <p data-a data-d="3">Every plan is built from the ground up. No templates, no guesswork, only protocols designed around your goals, your schedule and your body.</p>
         <div class="about-stats" data-a data-d="4">
           <div class="stat"><strong>4+</strong><span>Years Active</span></div>
           <div class="stat"><strong>100+</strong><span>Clients Worldwide</span></div>
@@ -469,14 +469,14 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
     <div class="sec-head" data-a>
       <span class="lbl">Online Coaching</span>
       <h2>Choose Your Program</h2>
-      <p>Every plan is built specifically for you — your goals, your schedule, your body.</p>
+      <p>Every plan is built specifically for you: your goals, your schedule, your body.</p>
     </div>
     <div class="s-grid">
       <div class="s-card" data-a data-d="1">
         <img class="s-img" src="https://hersovyac.com/wp-content/uploads/2019/06/Hersovyac-Advanced-Muscle-Gain-Coaching-600x506.jpg" alt="12 Months Professional Coaching" loading="lazy">
         <div class="s-body">
           <p class="s-title">12 Months Professional Coaching</p>
-          <p class="s-desc">Full-year transformation — custom training, nutrition and weekly check-ins for an entire year.</p>
+          <p class="s-desc">Full-year transformation: custom training, nutrition and weekly check-ins for an entire year.</p>
           <p class="s-price">&#8364;2.400</p>
           <a href="mailto:hersovyac@gmail.com" class="btn-card">Get Started <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
@@ -503,7 +503,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
         <img class="s-img" src="https://hersovyac.com/wp-content/uploads/2019/05/Hersovyac-program-custom-2-300x318.jpg" alt="6 Months Custom Training and Diet Plan" loading="lazy">
         <div class="s-body">
           <p class="s-title">6M Custom Training &amp; Diet Plan</p>
-          <p class="s-desc">Fully personalised training and nutrition plan for six months — without live coaching sessions.</p>
+          <p class="s-desc">Fully personalised training and nutrition plan for six months, without live coaching sessions.</p>
           <p class="s-price">&#8364;247</p>
           <a href="mailto:hersovyac@gmail.com" class="btn-card">Get Started <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
@@ -536,7 +536,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
       <div class="bk-text" data-a>
         <span class="lbl">Always Available</span>
         <h2>Ready When You Are</h2>
-        <p>Book your program at any time. Write and get a direct response within 24 hours — no waiting, no forms.</p>
+        <p>Book your program at any time. Write and get a direct response within 24 hours. No waiting, no forms.</p>
         <ul class="bk-list">
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Available 24/7</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Reply within 24 hours</li>
