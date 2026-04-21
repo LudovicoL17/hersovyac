@@ -123,7 +123,7 @@ h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-h
 .csa-perspective{perspective:1200px;width:100%;max-width:960px;padding:0 24px;z-index:2}
 .csa-card{
   width:100%;
-  height:clamp(260px,38vw,480px);
+  aspect-ratio:16/9;
   border:2px solid rgba(202,138,4,.3);
   border-radius:24px;
   overflow:hidden;
@@ -137,17 +137,23 @@ h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-h
   content:'';
   position:absolute;
   inset:0;
-  background:linear-gradient(to bottom,transparent 40%,rgba(12,10,9,.6) 100%);
+  background:linear-gradient(to bottom,transparent 55%,rgba(12,10,9,.5) 100%);
   pointer-events:none;
   z-index:1;
 }
-.csa-pose{
+#yt-player{
+  position:absolute;
+  inset:-1px;
+  width:calc(100% + 2px);
+  height:calc(100% + 2px);
+  pointer-events:none;
+}
+#yt-player iframe{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;
-  object-position:center top;
-  will-change:clip-path;
-  display:block;
+  border:0;
 }
 
 @media(max-width:768px){
@@ -321,12 +327,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
     </div>
     <div class="csa-perspective">
       <div class="csa-card" id="csa-card">
-        <img
-          id="csa-pose"
-          class="csa-pose"
-          src="https://hersovyac.com/wp-content/uploads/2022/09/PHOTO-2022-09-14-08-59-52.jpg"
-          alt="Hersovyac — posing"
-        >
+        <div id="yt-player"></div>
       </div>
     </div>
   </div>
@@ -603,37 +604,77 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, {passive: true});
 
+  // YouTube IFrame API — scroll-driven scrub from 25s to 28s
+  var ytPlayer, ytReady = false;
+  var lastSeek = 0;
+  var scrollProgress = 0;
+
+  (function loadYT(){
+    var s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(s);
+  })();
+
+  window.onYouTubeIframeAPIReady = function(){
+    ytPlayer = new YT.Player('yt-player', {
+      videoId: 'oL5dLWS64t0',
+      playerVars: {
+        autoplay: 0,
+        mute: 1,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        modestbranding: 1,
+        rel: 0,
+        playsinline: 1,
+        start: 25
+      },
+      events: {
+        onReady: function(e){
+          e.target.mute();
+          e.target.seekTo(25, true);
+          ytReady = true;
+          // apply initial position immediately
+          updateCSA();
+        }
+      }
+    });
+  };
+
   // ContainerScroll animation
   const csaSection = document.getElementById('home');
-  const csaCard   = document.getElementById('csa-card');
-  const csaTitle  = document.getElementById('csa-title');
-  const csaPose   = document.getElementById('csa-pose');
+  const csaCard    = document.getElementById('csa-card');
+  const csaTitle   = document.getElementById('csa-title');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function updateCSA(){
-    if(!csaSection || prefersReducedMotion) return;
+    if(!csaSection) return;
     const rect = csaSection.getBoundingClientRect();
     const scrollable = csaSection.offsetHeight - window.innerHeight;
     const p = Math.max(0, Math.min(1, -rect.top / scrollable));
+    scrollProgress = p;
 
-    // Card: rotateX 20 -> 0, scale 1.08 -> 1
-    const rx = 20 * (1 - p);
-    const sc = 1.08 - (0.08 * p);
-    csaCard.style.transform = `rotateX(${rx}deg) scale(${sc})`;
+    if(!prefersReducedMotion){
+      // Card 3D tilt: rotateX 20→0, scale 1.08→1
+      csaCard.style.transform = `rotateX(${20*(1-p)}deg) scale(${1.08 - 0.08*p})`;
+      // Title drifts up and fades out near end
+      csaTitle.style.transform = `translateY(${-60*p}px)`;
+      csaTitle.style.opacity   = p > 0.8 ? String(Math.max(0, 1-(p-0.8)*5)) : '1';
+    }
 
-    // Pose reveal: clip-path bottom 62% -> 0% (body revealed top-to-bottom)
-    const clip = 62 * (1 - p);
-    csaPose.style.clipPath = `inset(0 0 ${clip}% 0)`;
-
-    // Title: translate up slightly
-    csaTitle.style.transform = `translateY(${-55 * p}px)`;
-    csaTitle.style.opacity = p > 0.85 ? String(1 - (p - 0.85) * 6.67) : '1';
+    // Scrub YouTube: 25s + (0→3s) throttled to ~15fps
+    if(ytReady && ytPlayer && ytPlayer.seekTo){
+      const now = Date.now();
+      if(now - lastSeek > 66){
+        ytPlayer.seekTo(25 + p * 3, true);
+        lastSeek = now;
+      }
+    }
   }
 
-  // Init card transform
+  // Init tilt
   if(csaCard && !prefersReducedMotion){
     csaCard.style.transform = 'rotateX(20deg) scale(1.08)';
-    csaPose.style.clipPath = 'inset(0 0 62% 0)';
   }
 
   window.addEventListener('scroll', updateCSA, {passive: true});
