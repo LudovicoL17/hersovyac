@@ -106,58 +106,86 @@ h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-h
   .nav-overlay{display:block}
 }
 
-/* HERO — ContainerScroll */
-.csa-section{position:relative;height:210vh;background:var(--bg)}
-.csa-section::before{content:'';position:absolute;inset:0;background-image:url('https://hersovyac.com/wp-content/uploads/2025/06/dark1.png');background-size:cover;background-position:center;background-repeat:no-repeat;opacity:.18;pointer-events:none}
-.csa-inner{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:110px;overflow:hidden}
-.csa-orb{position:absolute;border-radius:50%;pointer-events:none}
-.csa-orb-1{width:700px;height:700px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(202,138,4,.1) 0%,transparent 65%);animation:pulse 7s ease-in-out infinite}
-.csa-orb-2{width:450px;height:450px;bottom:-100px;left:-150px;background:radial-gradient(circle,rgba(202,138,4,.06) 0%,transparent 65%);animation:pulse 9s ease-in-out infinite 2s}
-
-.csa-title{text-align:center;z-index:2;will-change:transform;padding:0 24px;animation:fadeUp 1s ease forwards}
-.hero-tag{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:20px}
-.hero-name{font-family:var(--fd);font-size:clamp(3.5rem,11vw,8rem);font-weight:900;font-style:italic;line-height:.9;letter-spacing:-.02em;color:var(--text);margin-bottom:16px;text-shadow:0 0 100px rgba(202,138,4,.12)}
-.hero-tagline{font-size:clamp(.9rem,2vw,1.2rem);font-weight:300;color:var(--t2);letter-spacing:.06em;margin-bottom:32px}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
-
-.csa-perspective{perspective:1200px;width:100%;max-width:960px;padding:0 24px;z-index:2}
-.csa-card{
-  width:100%;
-  aspect-ratio:16/9;
-  border:2px solid rgba(202,138,4,.3);
-  border-radius:24px;
-  overflow:hidden;
-  background:#0C0A09;
-  box-shadow:0 0 #0000004d,0 9px 20px #0000004a,0 37px 37px #00000042,0 84px 50px #00000026,0 149px 60px #0000000a;
-  transform-origin:50% 100%;
-  will-change:transform;
+/* HERO v2 — Pose background */
+.hero-v2{
   position:relative;
+  height:100svh;
+  min-height:600px;
+  overflow:hidden;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.csa-card::after{
+.hero-v2::after{
   content:'';
   position:absolute;
   inset:0;
-  background:linear-gradient(to bottom,transparent 55%,rgba(12,10,9,.5) 100%);
-  pointer-events:none;
+  background:
+    linear-gradient(to bottom,rgba(12,10,9,.25) 0%,transparent 25%,transparent 60%,rgba(12,10,9,.75) 100%);
   z-index:1;
-}
-#yt-player{
-  position:absolute;
-  inset:-1px;
-  width:calc(100% + 2px);
-  height:calc(100% + 2px);
   pointer-events:none;
 }
-#yt-player iframe{
+.hero-pose-wrap{
   position:absolute;
   inset:0;
+  perspective:900px;
+  perspective-origin:50% 50%;
+}
+.hero-pose-img{
   width:100%;
   height:100%;
-  border:0;
+  object-fit:cover;
+  object-position:center;
+  transform-origin:center center;
+  will-change:transform,filter,opacity;
+  animation:poseArrive 2.2s cubic-bezier(0.22,0.61,0.36,1) both;
 }
+@keyframes poseArrive{
+  0%{
+    opacity:0;
+    transform:scale(1.12) translateY(30px) translateX(12px);
+    filter:blur(6px) brightness(.35);
+  }
+  35%{opacity:.8}
+  65%{
+    transform:scale(1.04) translateY(6px) translateX(3px);
+    filter:blur(1.5px) brightness(.85);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1) translateY(0) translateX(0);
+    filter:blur(0) brightness(1);
+  }
+}
+.hero-v2-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.hero-v2-orb-1{width:600px;height:600px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(202,138,4,.1) 0%,transparent 65%);animation:pulse 7s ease-in-out infinite}
+.hero-v2-orb-2{width:400px;height:400px;bottom:-80px;left:-100px;background:radial-gradient(circle,rgba(202,138,4,.06) 0%,transparent 65%);animation:pulse 9s ease-in-out infinite 2.5s}
 
-@media(max-width:768px){
-  .csa-inner{padding-top:90px}
+.hero-v2-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 24px;
+  animation:fadeUp .9s ease .6s both;
+}
+.hero-tag{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:24px}
+.hero-name{
+  font-family:var(--fd);
+  font-size:clamp(3.8rem,13vw,9.5rem);
+  font-weight:900;
+  font-style:italic;
+  line-height:.9;
+  letter-spacing:-.02em;
+  color:var(--text);
+  margin-bottom:18px;
+  text-shadow:0 2px 60px rgba(0,0,0,.8),0 0 100px rgba(202,138,4,.15);
+}
+.hero-tagline{font-size:clamp(.9rem,2.2vw,1.25rem);font-weight:300;color:var(--t2);letter-spacing:.06em;margin-bottom:36px;text-shadow:0 1px 20px rgba(0,0,0,.7)}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:480px){
+  .hero-name{font-size:clamp(3rem,18vw,5rem)}
   .hero-btns{flex-direction:column;align-items:center}
   .hero-btns .btn{width:100%;justify-content:center}
 }
@@ -309,26 +337,27 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
   <a href="#contact" class="drawer-link">Contact</a>
 </div>
 
-<section class="csa-section" id="home">
-  <div class="csa-inner" id="csa-inner">
-    <div class="csa-orb csa-orb-1"></div>
-    <div class="csa-orb csa-orb-2"></div>
-    <div class="csa-title" id="csa-title">
-      <p class="hero-tag">Certified Personal Trainer &nbsp;·&nbsp; Nutritionist &nbsp;·&nbsp; Posing Coach</p>
-      <h1 class="hero-name">HΞRSΘVYΛC</h1>
-      <p class="hero-tagline">Unleash the Viking Power Within</p>
-      <div class="hero-btns">
-        <a href="#coaching" class="btn btn-pri">
-          Start Coaching
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#ebooks" class="btn btn-out">Browse Ebooks</a>
-      </div>
-    </div>
-    <div class="csa-perspective">
-      <div class="csa-card" id="csa-card">
-        <div id="yt-player"></div>
-      </div>
+<section class="hero-v2" id="home">
+  <div class="hero-pose-wrap">
+    <img
+      id="hero-pose"
+      class="hero-pose-img"
+      src="pose.png"
+      alt="Hersovyac — posing"
+    >
+  </div>
+  <div class="hero-v2-orb hero-v2-orb-1" aria-hidden="true"></div>
+  <div class="hero-v2-orb hero-v2-orb-2" aria-hidden="true"></div>
+  <div class="hero-v2-content">
+    <p class="hero-tag">Certified Personal Trainer &nbsp;·&nbsp; Nutritionist &nbsp;·&nbsp; Posing Coach</p>
+    <h1 class="hero-name">HΞRSΘVYΛC</h1>
+    <p class="hero-tagline">Unleash the Viking Power Within</p>
+    <div class="hero-btns">
+      <a href="#coaching" class="btn btn-pri">
+        Start Coaching
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#ebooks" class="btn btn-out">Browse Ebooks</a>
     </div>
   </div>
 </section>
@@ -604,81 +633,40 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:72px 0 32
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, {passive: true});
 
-  // YouTube IFrame API — scroll-driven scrub from 25s to 28s
-  var ytPlayer, ytReady = false;
-  var lastSeek = 0;
-  var scrollProgress = 0;
-
-  (function loadYT(){
-    var s = document.createElement('script');
-    s.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(s);
-  })();
-
-  window.onYouTubeIframeAPIReady = function(){
-    ytPlayer = new YT.Player('yt-player', {
-      videoId: 'oL5dLWS64t0',
-      playerVars: {
-        autoplay: 0,
-        mute: 1,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        modestbranding: 1,
-        rel: 0,
-        playsinline: 1,
-        start: 25
-      },
-      events: {
-        onReady: function(e){
-          e.target.mute();
-          e.target.seekTo(25, true);
-          ytReady = true;
-          // apply initial position immediately
-          updateCSA();
-        }
-      }
-    });
-  };
-
-  // ContainerScroll animation
-  const csaSection = document.getElementById('home');
-  const csaCard    = document.getElementById('csa-card');
-  const csaTitle   = document.getElementById('csa-title');
+  // 3D mousemove parallax on hero pose
+  const heroPose = document.getElementById('hero-pose');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let poseAnimDone = false;
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  let rafId = null;
 
-  function updateCSA(){
-    if(!csaSection) return;
-    const rect = csaSection.getBoundingClientRect();
-    const scrollable = csaSection.offsetHeight - window.innerHeight;
-    const p = Math.max(0, Math.min(1, -rect.top / scrollable));
-    scrollProgress = p;
+  if(heroPose){
+    heroPose.addEventListener('animationend', () => { poseAnimDone = true; });
 
     if(!prefersReducedMotion){
-      // Card 3D tilt: rotateX 20→0, scale 1.08→1
-      csaCard.style.transform = `rotateX(${20*(1-p)}deg) scale(${1.08 - 0.08*p})`;
-      // Title drifts up and fades out near end
-      csaTitle.style.transform = `translateY(${-60*p}px)`;
-      csaTitle.style.opacity   = p > 0.8 ? String(Math.max(0, 1-(p-0.8)*5)) : '1';
-    }
+      document.addEventListener('mousemove', (e) => {
+        mx = (e.clientX / window.innerWidth  - 0.5) * 2; // -1 → 1
+        my = (e.clientY / window.innerHeight - 0.5) * 2; // -1 → 1
+      }, {passive: true});
 
-    // Scrub YouTube: 25s + (0→3s) throttled to ~15fps
-    if(ytReady && ytPlayer && ytPlayer.seekTo){
-      const now = Date.now();
-      if(now - lastSeek > 66){
-        ytPlayer.seekTo(25 + p * 3, true);
-        lastSeek = now;
+      // Device tilt (mobile)
+      window.addEventListener('deviceorientation', (e) => {
+        if(e.gamma != null) mx = Math.max(-1, Math.min(1, e.gamma / 20));
+        if(e.beta  != null) my = Math.max(-1, Math.min(1, (e.beta - 30) / 20));
+      }, {passive: true});
+
+      function parallaxLoop(){
+        if(poseAnimDone && heroPose){
+          cx += (mx - cx) * 0.06; // lerp — smooth lag
+          cy += (my - cy) * 0.06;
+          heroPose.style.transform =
+            `perspective(900px) rotateY(${cx * 6}deg) rotateX(${-cy * 3.5}deg) scale(1.03)`;
+        }
+        rafId = requestAnimationFrame(parallaxLoop);
       }
+      parallaxLoop();
     }
   }
-
-  // Init tilt
-  if(csaCard && !prefersReducedMotion){
-    csaCard.style.transform = 'rotateX(20deg) scale(1.08)';
-  }
-
-  window.addEventListener('scroll', updateCSA, {passive: true});
-  updateCSA();
 
   const burger = document.getElementById('burger');
   const drawer = document.getElementById('drawer');
